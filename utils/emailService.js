@@ -22,7 +22,7 @@ transporter.verify(function (error, success) {
 const sendEmailNotification = async (submission) => {
   try {
     const adminMailOptions = {
-      from: `"Pune Community Hub" <${process.env.EMAIL_USER}>`,
+      from: `"THE API COMMUNITY" <${process.env.EMAIL_USER}>`,
       to: process.env.ADMIN_EMAIL,
       subject: "New Team Interest Form Submission",
       html: `
@@ -40,7 +40,7 @@ const sendEmailNotification = async (submission) => {
     const userMailOptions = {
       from: `"POSTMAN COMMUNITY PUNE" <${process.env.ADMIN_EMAIL}>`,
       to: submission.userEmail,
-      subject: "Thank You for Your Interest - POSTMAN COMMUNITY PUNE",
+      subject: "Thank You for Your Interest - THE API COMMUNITY",
       html: `<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
         <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
