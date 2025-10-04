@@ -29,7 +29,9 @@ app.use(cors({
       'https://www.postmancommunitypune.in',
       'http://www.postmancommunitypune.in',
       'https://postmancommunitypune.in',
-      'http://postmancommunitypune.in'
+      'http://postmancommunitypune.in',
+      'https://www.theapicommunity.org',
+      'https://theapicommunity.org'
     ];
     
     // Allow requests with no origin (like mobile apps or curl requests)
