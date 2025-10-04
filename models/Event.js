@@ -29,11 +29,6 @@ const eventSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  availableSeats: {
-    type: Number,
-    required: true,
-    min: 1
-  },
   image: {
     type: String, // URL to the stored image
     required: false
@@ -41,6 +36,30 @@ const eventSchema = new mongoose.Schema({
   registrations: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Registration'
+  }],
+  speakers: [{
+    name: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    role: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    bio: {
+      type: String,
+      trim: true
+    },
+    linkedin: {
+      type: String,
+      trim: true
+    },
+    image: {
+      type: String, // URL to the speaker image
+      trim: true
+    }
   }],
   createdAt: {
     type: Date,

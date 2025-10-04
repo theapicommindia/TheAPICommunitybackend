@@ -36,7 +36,7 @@ router.post('/create', async (req, res) => {
     }); // Debug log with truncated image data
 
     // Validate required fields
-    const requiredFields = ['title', 'description', 'date', 'time', 'location', 'availableSeats'];
+    const requiredFields = ['title', 'description', 'date', 'time', 'location'];
     const missingFields = requiredFields.filter(field => !req.body[field]);
     
     if (missingFields.length > 0) {
@@ -56,14 +56,6 @@ router.post('/create', async (req, res) => {
       });
     }
 
-    // Validate available seats
-    const availableSeats = parseInt(req.body.availableSeats);
-    if (isNaN(availableSeats) || availableSeats < 1) {
-      console.log('Invalid available seats:', req.body.availableSeats);
-      return res.status(400).json({
-        message: 'Available seats must be a positive number'
-      });
-    }
 
     // Create event data object
     const eventData = {
@@ -73,8 +65,8 @@ router.post('/create', async (req, res) => {
       date: eventDate,
       time: req.body.time,
       location: req.body.location.trim(),
-      availableSeats: availableSeats,
-      image: req.body.image || '' // Store the image URL directly
+      image: req.body.image || '', // Store the image URL directly
+      speakers: req.body.speakers || [] // Store speakers array
     };
 
     console.log('Creating event with data:', {
@@ -125,10 +117,6 @@ router.post('/:id/register', async (req, res) => {
       return res.status(404).json({ message: 'Event not found' });
     }
 
-    // Check if seats are available
-    if (event.registrations.length >= event.availableSeats) {
-      return res.status(400).json({ message: 'No seats available' });
-    }
 
     // Add registration
     event.registrations.push(req.body.userId || 'anonymous');
@@ -172,7 +160,7 @@ router.put('/:id', async (req, res) => {
     if (req.body.date) updateData.date = new Date(req.body.date);
     if (req.body.time) updateData.time = req.body.time;
     if (req.body.location) updateData.location = req.body.location;
-    if (req.body.availableSeats) updateData.availableSeats = parseInt(req.body.availableSeats);
+    if (req.body.speakers) updateData.speakers = req.body.speakers;
     
     // Handle image update
     if (req.body.image !== undefined) {

@@ -93,11 +93,6 @@ registrationSchema.pre('save', async function(next) {
         throw new Error('Registration is closed for past events');
       }
 
-      // Check available seats
-      const registrationCount = await this.constructor.countDocuments({ eventId: this.eventId });
-      if (registrationCount >= event.availableSeats) {
-        throw new Error('No seats available for this event');
-      }
     } catch (error) {
       next(error);
     }

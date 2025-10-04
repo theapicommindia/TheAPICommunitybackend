@@ -90,4 +90,43 @@ router.post('/create', async (req, res) => {
   }
 });
 
+// Verify admin token
+router.get('/verify', async (req, res) => {
+  try {
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+    
+    if (!token) {
+      return res.status(401).json({
+        status: 'error',
+        message: 'No authentication token, access denied'
+      });
+    }
+
+    const verified = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+    
+    // Get admin details
+    const admin = await Admin.findById(verified.id).select('-password');
+    if (!admin) {
+      return res.status(401).json({
+        status: 'error',
+        message: 'Admin not found'
+      });
+    }
+
+    res.json({
+      status: 'success',
+      admin: {
+        id: admin._id,
+        email: admin.email
+      }
+    });
+  } catch (error) {
+    console.error('Token verification error:', error);
+    res.status(401).json({
+      status: 'error',
+      message: 'Token verification failed, authorization denied'
+    });
+  }
+});
+
 module.exports = router; 
